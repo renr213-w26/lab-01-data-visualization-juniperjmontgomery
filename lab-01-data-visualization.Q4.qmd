@@ -1,0 +1,135 @@
+---
+title: "lab-01-data-visualization.qmd"
+author: "Juno Montgomery"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+# Lab 1: Data Visualization
+
+This lab explores basic plots in R using the `midwest` dataset from the `ggplot2` package.
+
+library(tidyverse)
+
+#Q1: Histogram of population density
+
+ggplot(midwest, aes(x = popdensity)) +
+  geom_histogram(binwidth = 100) +
+  labs(
+    x = "Population density",
+    y = "Count",
+    title = "Population density of midwestern counties",
+    subtitle = "Binwidth = 100"
+  )
+  
+ggplot(midwest, aes(x = popdensity)) +
+  geom_histogram(binwidth = 1000) +
+  labs(
+    x = "Population density",
+    y = "Count",
+    title = "Population density of midwestern counties",
+    subtitle = "Binwidth = 1000"
+  )
+  
+ggplot(midwest, aes(x = popdensity)) +
+  geom_histogram(binwidth = 10000) +
+  labs(
+    x = "Population density",
+    y = "Count",
+    title = "Population density of midwestern counties",
+    subtitle = "Binwidth = 10000"
+  )
+  
+ggplot(midwest, aes(x = popdensity)) +
+  geom_histogram(binwidth = 100000) +
+  labs(
+    x = "Population density",
+    y = "Count",
+    title = "Population density of midwestern counties",
+    subtitle = "Binwidth = 100000"
+  )
+  
+Answer: I think the binwidth of 1000 is most informative, as it gives you the clearest visualization. Too many bins are overcluttered/oversaturated (i.e. bin widths of 10 000 or 100 000) which emphasizes random variation, while too few bins (i.e. 100) oversmooths the structure and hides variation. The moderate bin width of 1000 most clearly demonstrates the right-skewed population density while still allowing the overall shape of the distribution to be understood.
+
+#Q2: Boxplot of area by state
+
+ggplot(midwest, aes(y = popdensity)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(
+    title = "Distribution of Population Density of Midwest Counties",
+    y = "Population Density (people per square mile)"
+  )
+
+Answer: The boxplot looks compressed at the bottom, with many outliers. This makes sense since most counties are similar with a low pop density, and few counties are vastly the opposite, causing a scaled boxplot to be look like a flat line. Since it's extremely right-skewed, as seen in the histogram from Q1, the boxplot is pushed to the bottom. Most counties have a relatively small population density, while a few counties have extremely high densities. Several high outliers are seen in the box plot, such as Cook County, Illinois, which includes Chicago, a bumping metropolis (no cows to be seen, unfortunately). This is a logical outlier, as it has an extremely high pop density relative to its rural county counterparts. 
+
+#Q3: Scatter plot of total population vs population density
+
+ggplot(
+  midwest,
+  aes(
+    x = percollege,
+    y = percbelowpoverty,
+    color = state,
+    shape = state
+  )
+) +
+  geom_point(alpha = 0.7) +
+  labs(
+    title = "Percentage Below Poverty vs. Percentage with a College Degree",
+    x = "Percentage of People with a College Degree",
+    y = "Percentage Below Poverty",
+    color = "State",
+    shape = "State"
+  )
+  
+Answer: the scatterplot shows a relatively clear negative relationship between the percentage of people with a college degree and those living below the poverty line. Counties with higher levels of college education tend to have lower poverty rates, while counties with lower percentages of college-educated residents tend to have higher poverty rates. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty despite having a moderate percentage of college-educated residents (~36%). 
+When examining the plot by state, the overall negative relationship appears consistent across states, but the strength and spread of the relationship vary. Some states show a tighter clustering of points along the downward trend, while others have greater variability. This suggests that while higher education is generally associated with lower poverty across the Midwest, the magnitude of this relationship differs somewhat by state.
+
+#Q4: Scatter plot colored by state
+
+ggplot(
+  midwest,
+  aes(
+    x = percollege,
+    y = percbelowpoverty,
+    color = state,
+    shape = state
+  )
+) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ state) +
+  labs(
+    title = "Percentage Below Poverty vs. College Education by State",
+    x = "Percentage of People with a College Degree",
+    y = "Percentage Below Poverty",
+    color = "State",
+    shape = "State"
+  )
+  
+Answer: I think it depends on the question being asked. I like Q3s plot better for comparison and overall trend comparison of the midwest, but this Qs plots are so much easier to look at the relationship between poverty and college education on an individual state basis, so it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
+
+#Q5: Faceted scatter plot by state
+
+ggplot(midwest, aes(x = poptotal, y = popdensity)) + geom_point(color = "orange") + facet_wrap(\~state) + labs(title = "Population vs Density Faceted by State", x = "Total Population", y = "Population Density")
