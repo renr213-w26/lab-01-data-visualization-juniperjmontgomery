@@ -161,7 +161,6 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = percwhite)) +
 
 Answer: Menominee County, Wisconsin, is a clear outlier. This county no black people (0%), very few "Other" (less than 1%), and a relatively (to other counties) low percentage of white people (about 11%), while the majority of the population (about 88%) is classified as “amerindian," which I'm assuming refers to Indigenous peoples.
 
-
 # Part 2: North Carolina
 
 ```{r, echo = false}
@@ -178,14 +177,21 @@ ggplot(nc_county, aes(x = land_area_mi2, y = density)) +
   labs(x = "Land Area (square miles)", 
        y = "Population Density\n(people per square mile)",
        title = "Population Density vs. Land Area in\nNorth Carolina Counties",
-       subtitle = "According to 2020 census")
+       subtitle = "According to 2020 census data")
 ```
 
 Answer 2: there is sort of a positive relationship between land area and population density, but the trend is relatively flat, where population density is relatively low overall. There are several outliers, likely metropolitan areas w/ very high population density despite smaller land area. I was not correct.
 
-
 ## Q9: pop density vs land area in square meters
 
-ggplot(nc_county, aes(x = land_area_m2, y = density)) + geom_point(color = "darkgreen", alpha = 0.6, size = 2) + labs( title = "Population Density vs. Land Area in Square Meters in NC Counties", x = "Land Area (square meters)", y = "Population Density (people per square mile)" ) + theme_bw()
+```{r}
+ggplot(nc_county, aes(x = land_area_m2, y = density)) + 
+  geom_point() + 
+  labs(
+    x = "Land Area\n(square meters)", 
+    y = "Population Density\n(people per square mile)",
+    title = "Population Density vs. Land Area in\nNorth Carolina Counties",
+    subtitle = "According to 2020 census data")
+```
 
-Answer: this shows a similar ish overall negative relationship as the plot using land area in square miles. The only difference is the scale of the x-axis, where values are much larger in square meters, which stretches the points horizontally, but the pattern of the relationship is unchanged. This illustrates that changing units affects the axis labels and scale, but not the underlying relationship between the variables.
+Answer: this plot shows an identical negative relationship as the previous plot. The only difference is the scale of the x-axis, where values are much larger in square meters and slightly stretches the points horizontally, but the overall relationship is unchanged.
