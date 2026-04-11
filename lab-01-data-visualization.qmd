@@ -34,6 +34,8 @@ This lab explores basic plots in R using the `midwest` dataset from the `ggplot2
 library(tidyverse)
 ```
 
+# Part 1: The Midwest
+
 ## Q1: Histogram of pop density
 
 ```{r}
@@ -142,7 +144,6 @@ ggplot(midwest, aes(x = state, fill = metro)) +
 
 Answer: Yes, some states have a higher percentage of their counties located in metropolitan areas than others. Ohio appears to have the highest proportion of metro counties at about 45%. Indiana also has a relatively high proportion of metro counties at about 40%. In contrast, Illinois, Michigan, and Wisconsin have a lower percentage of counties in metropolitan areas, with metro counties making up about 26%, 27%, and 26% of all counties respectively.
 
-
 #Q7: Recreating scatterplot
 
 ```{r}
@@ -161,17 +162,29 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = percwhite)) +
 Answer: Menominee County, Wisconsin, is a clear outlier. This county no black people (0%), very few "Other" (less than 1%), and a relatively (to other counties) low percentage of white people (about 11%), while the majority of the population (about 88%) is classified as “amerindian," which I'm assuming refers to Indigenous peoples.
 
 
-#### Part 2: nc_county \<- read_csv("data/nc-county.csv")
+# Part 2: North Carolina
 
-#Q8: scatterplot of population density vs land area
+```{r, echo = false}
+nc_county <- read_csv("data/nc-county.csv")
+```
 
-Answer 1: Given what we've seen in previous states (although this is a completely diff region), I might guesst that there's a negative relationship, especially since I can't think of any major metropolitan areas that would harbour high pop densities.
+## Q8: pop density vs area
 
-ggplot(nc_county, aes(x = land_area_mi2, y = density)) + geom_point(color = "blue", alpha = 0.6, size = 2) + labs( title = "Population Density vs. Land Area in North Carolina Counties", x = "Land Area (square miles)", y = "Population Density (people per square mile)" ) + theme_bw()
+Answer 1: Given what we've seen in previous states (although this is a completely diff region), I might guess that there's a negative relationship, especially since I can't think of any major metropolitan areas that would have high pop densities.
 
-Answer 2: there is somewhat of a general negative relationship between land area and population density, but there are several outliers, likely metropolitan areas w/ very high population density despite smaller land area. I was somewhat correct.
+```{r}
+ggplot(nc_county, aes(x = land_area_mi2, y = density)) + 
+  geom_point() + 
+  labs(x = "Land Area (square miles)", 
+       y = "Population Density\n(people per square mile)",
+       title = "Population Density vs. Land Area in\nNorth Carolina Counties",
+       subtitle = "According to 2020 census")
+```
 
-#Q8: scatterplot of population density vs land area in square meters
+Answer 2: there is sort of a positive relationship between land area and population density, but the trend is relatively flat, where population density is relatively low overall. There are several outliers, likely metropolitan areas w/ very high population density despite smaller land area. I was not correct.
+
+
+## Q9: pop density vs land area in square meters
 
 ggplot(nc_county, aes(x = land_area_m2, y = density)) + geom_point(color = "darkgreen", alpha = 0.6, size = 2) + labs( title = "Population Density vs. Land Area in Square Meters in NC Counties", x = "Land Area (square meters)", y = "Population Density (people per square mile)" ) + theme_bw()
 
