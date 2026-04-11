@@ -91,24 +91,35 @@ Answer: The boxplot looks compressed at the bottom, with many outliers. This mak
 ## Q3: Scatter plot of total pop vs pop density
 
 ```{r}
-ggplot( midwest, aes( x = percollege, y = percbelowpoverty, color = state, shape = state )) + 
-  geom_point(alpha = 0.7) + 
+ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape = state)) + 
+  geom_point() + 
   labs(
     x = "People with a College Degree (%)", 
     y = "People Below Poverty (%)", 
-    title = "Scatterplot of People Below Poverty vs. People with a College Degree")
+    title = "People Below Poverty vs. College-Educated")
 ```
 
 Answer: the scatterplot shows a negative relationship between the percentage of people with a college degree and those living below the poverty line. Higher percentages of college education tend to have lower poverty rates, and vice versa, with several outliers. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty (about 28%) despite having a higher percentage of college-educated people (about 37%).
   The states seem to vary somewhat in their strength and spread, such as Indiana seems to have tighter clustering compared to Minnesota. While this overall relationship appears to be consistent across states, it's difficult to discern due to how cluttered the graph is. I would not be confident commenting on specific trends by state, but this graph does help show the overall relationship across midwest counties.
 
-#Q4: Scatter plot colored by state
 
-ggplot( midwest, aes( x = percollege, y = percbelowpoverty, color = state, shape = state ) ) + geom_point(alpha = 0.7) + geom_smooth(se = FALSE) + facet_wrap(\~ state) + labs( title = "Percentage Below Poverty vs. College Education by State", x = "Percentage of People with a College Degree", y = "Percentage Below Poverty", color = "State", shape = "State" )
+## Q4: Scatterplot faceted by state
 
-Answer: I think it depends on the question being asked. I like Q3s plot better for comparison and overall trend comparison of the midwest, but this Qs plots are so much easier to look at the relationship between poverty and college education on an individual state basis, so it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
+```{r}
+ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape = state)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE) + 
+  facet_wrap(~state) + 
+  labs(
+    x = "People with a College Degree (%)", 
+    y = "People Below Poverty (%)", 
+    title = "People Below Poverty vs. College-Educated by State")
+```
 
-#Q5: Faceted scatter plot by state
+Answer: I think it depends on the question being asked. I like Q3s plot better for understanding the overall trend of the midwest, but this scatterplot is so much easier to look at the relationship between poverty and college education on an individual state basis, as it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
+
+
+## Q5: Faceted scatter plot by state
 
 ggplot(midwest, aes(x = state, y = area)) + geom_boxplot(fill = "lightgreen") + labs( title = "Distribution of County Area by State", x = "State", y = "County Area" )
 
