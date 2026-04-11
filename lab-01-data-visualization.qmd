@@ -34,7 +34,6 @@ This lab explores basic plots in R using the `midwest` dataset from the `ggplot2
 library(tidyverse)
 ```
 
-
 ## Q1: Histogram of pop density
 
 ```{r}
@@ -75,7 +74,6 @@ ggplot(midwest, aes(x = popdensity)) +
 
 Answer: I think the binwidth of 1000 is most informative, as it gives you the clearest visualization. Too many bins make the histogram overcluttered (i.e. bin widths of 10 000 or 100 000) because they emphasize random variation, while too few bins (i.e. 100) hides variation. The bin width of 1000 most clearly shows how the variation and shape distribution of population density.
 
-
 ## Q2: Boxplot of pop density
 
 ```{r}
@@ -88,7 +86,6 @@ ggplot(midwest, aes(y = popdensity)) +
 
 Answer: The boxplot looks compressed at the bottom, with many outliers. This makes sense since most counties are similar with a low pop density, with a few high density populated outliers like Cook County, Illinois, causing the boxplot to look like a flat line. Since it's extremely right-skewed, as seen in the histogram from Q1, the boxplot is pushed to the bottom.
 
-
 ## Q3: Scatterplot below poverty vs. college-educated
 
 ```{r}
@@ -100,9 +97,7 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape =
     title = "People Below Poverty vs. College-Educated")
 ```
 
-Answer: the scatterplot shows a negative relationship between the percentage of people with a college degree and those living below the poverty line. Higher percentages of college education tend to have lower poverty rates, and vice versa, with several outliers. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty (about 28%) despite having a higher percentage of college-educated people (about 37%).
-  The states seem to vary somewhat in their strength and spread, such as Indiana seems to have tighter clustering compared to Minnesota. While this overall relationship appears to be consistent across states, it's difficult to discern due to how cluttered the graph is. I would not be confident commenting on specific trends by state, but this graph does help show the overall relationship across midwest counties.
-
+Answer: the scatterplot shows a negative relationship between the percentage of people with a college degree and those living below the poverty line. Higher percentages of college education tend to have lower poverty rates, and vice versa, with several outliers. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty (about 28%) despite having a higher percentage of college-educated people (about 37%). The states seem to vary somewhat in their strength and spread, such as Indiana seems to have tighter clustering compared to Minnesota. While this overall relationship appears to be consistent across states, it's difficult to discern due to how cluttered the graph is. I would not be confident commenting on specific trends by state, but this graph does help show the overall relationship across midwest counties.
 
 ## Q4: Scatterplot faceted by state
 
@@ -119,7 +114,6 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape =
 
 Answer: I think it depends on the question being asked. I like Q3s plot better for understanding the overall trend of the midwest, but this scatterplot is so much easier to look at the relationship between poverty and college education on an individual state basis, as it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
 
-
 ## Q5: Do some states have counties that tend to be geographically larger than others?
 
 ```{r}
@@ -132,7 +126,6 @@ ggplot(midwest, aes(x = state, y = area)) +
 ```
 
 Answer: Yes, some states have geographically larger counties on average than others. For example, counties in Minnesota tend to have larger median areas compared to counties in states such as Ohio and Indiana, and also has an outlier with the largest county area, St. Louis County. Illinois, Minnesota, and Wisconsin also have greater variation in county size, as seen by their wider spread. Whereas Indiana and Ohio have much shorter distributions, suggesting their county areas are more consistent in size.
-
 
 ## Q6: Do some states have a higher percentage of their counties located in a metropolitan area?
 
@@ -149,13 +142,26 @@ ggplot(midwest, aes(x = state, fill = metro)) +
 
 Answer: Yes, some states have a higher percentage of their counties located in metropolitan areas than others. Ohio appears to have the highest proportion of metro counties at about 45%. Indiana also has a relatively high proportion of metro counties at about 40%. In contrast, Illinois, Michigan, and Wisconsin have a lower percentage of counties in metropolitan areas, with metro counties making up about 26%, 27%, and 26% of all counties respectively.
 
-#Q7:
 
-ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = percwhite)) + geom_point(size = 2, alpha = 0.5) + facet_wrap(\~state) + scale_color_gradient(low='black', high='blue') + labs( title='Percentage Below Poverty vs. Percentage College Educated by County, by State', x='% College Educated', y='% Below Poverty', color='% White' ) + theme_bw() + theme(legend.position='right')
+#Q7: Recreating scatterplot
 
-Answer: Menominee County, Wisconsin, is a clear outlier, which stands out on the scatterplot. This county has a high poverty rate and a low percentage of college-educated residents compared to other Wisconsin counties. Investigating its population composition shows that Menominee County has a very low percentage of White residents (\~11%) and a majority of residents (\~88%) classified as “Other/Native,” primarily Native American, because the county includes the Menominee Indian Reservation. This unique demographic explains why it appears as an outlier relative to other counties in the state.
+```{r}
+ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = percwhite)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  facet_wrap(~state) + 
+  scale_color_gradient(low='black', high='blue') + 
+  labs(
+    x='% college educated', 
+    y='% below poverty line',
+    title='Percentage of White People Below Poverty vs. \nCollege-Educated by State',
+    color = "% white") + 
+  theme_minimal()
+```
 
-#Part 2: nc_county \<- read_csv("data/nc-county.csv")
+Answer: Menominee County, Wisconsin, is a clear outlier. This county no black people (0%), very few "Other" (less than 1%), and a relatively (to other counties) low percentage of white people (about 11%), while the majority of the population (about 88%) is classified as “amerindian," which I'm assuming refers to Indigenous peoples.
+
+
+#### Part 2: nc_county \<- read_csv("data/nc-county.csv")
 
 #Q8: scatterplot of population density vs land area
 
