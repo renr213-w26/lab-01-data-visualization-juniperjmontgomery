@@ -120,7 +120,7 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape =
 Answer: I think it depends on the question being asked. I like Q3s plot better for understanding the overall trend of the midwest, but this scatterplot is so much easier to look at the relationship between poverty and college education on an individual state basis, as it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
 
 
-## Q5: Boxplots comparing counties' geographic area
+## Q5: Do some states have counties that tend to be geographically larger than others?
 
 ```{r}
 ggplot(midwest, aes(x = state, y = area)) + 
@@ -136,11 +136,18 @@ Answer: Yes, some states have geographically larger counties on average than oth
 
 ## Q6: Do some states have a higher percentage of their counties located in a metropolitan area?
 
-midwest \<- midwest \|\> mutate(metro = if_else(inmetro == 1, "Yes", "No"))
+```{r}
+midwest <- midwest |>
+  mutate(metro = if_else(inmetro == 1, "Yes", "No"))
 
-ggplot(midwest, aes(x = state, fill = metro)) + geom_bar(position = "fill") + scale_y_continuous(labels = scales::percent_format()) + labs( title = "Proportion of Counties in Metropolitan Areas by State", x = "State", y = "Proportion of Counties", fill = "Metro Area" )
+ggplot(midwest, aes(x = state, fill = metro)) + 
+  geom_bar(position = "fill") + 
+  labs(x = "State", 
+       y = "Proportion of Counties",
+       title = "Proportion of Counties in Metropolitan Areas by State")
+```
 
-Answer: Yes, some states have a higher percentage of their counties located in metropolitan areas than others. Based on the segmented bar chart, Ohio appears to have the highest proportion of metro counties, with roughly 45% of counties classified as metropolitan. Indiana also has a relatively high proportion of metro counties at approximately 40%. In contrast, states such as Illinois, Michigan, and Wisconsin have a lower percentage of counties in metropolitan areas, with metro counties making up closer to 28% of all counties.Overall, the plot shows clear variation across states, suggesting that some Midwestern states are more urbanized at the county level than others.
+Answer: Yes, some states have a higher percentage of their counties located in metropolitan areas than others. Ohio appears to have the highest proportion of metro counties at about 45%. Indiana also has a relatively high proportion of metro counties at about 40%. In contrast, Illinois, Michigan, and Wisconsin have a lower percentage of counties in metropolitan areas, with metro counties making up about 26%, 27%, and 26% of all counties respectively.
 
 #Q7:
 
