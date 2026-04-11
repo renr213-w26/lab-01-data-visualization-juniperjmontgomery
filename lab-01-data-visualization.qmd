@@ -88,11 +88,19 @@ ggplot(midwest, aes(y = popdensity)) +
 Answer: The boxplot looks compressed at the bottom, with many outliers. This makes sense since most counties are similar with a low pop density, with a few high density populated outliers like Cook County, Illinois, causing the boxplot to look like a flat line. Since it's extremely right-skewed, as seen in the histogram from Q1, the boxplot is pushed to the bottom.
 
 
-#Q3: Scatter plot of total population vs population density
+## Q3: Scatter plot of total pop vs pop density
 
-ggplot( midwest, aes( x = percollege, y = percbelowpoverty, color = state, shape = state ) ) + geom_point(alpha = 0.7) + labs( title = "Percentage Below Poverty vs. Percentage with a College Degree", x = "Percentage of People with a College Degree", y = "Percentage Below Poverty", color = "State", shape = "State" )
+```{r}
+ggplot( midwest, aes( x = percollege, y = percbelowpoverty, color = state, shape = state )) + 
+  geom_point(alpha = 0.7) + 
+  labs(
+    x = "People with a College Degree (%)", 
+    y = "People Below Poverty (%)", 
+    title = "Scatterplot of People Below Poverty vs. People with a College Degree")
+```
 
-Answer: the scatterplot shows a relatively clear negative relationship between the percentage of people with a college degree and those living below the poverty line. Counties with higher levels of college education tend to have lower poverty rates, while counties with lower percentages of college-educated residents tend to have higher poverty rates. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty despite having a moderate percentage of college-educated residents (\~36%). When examining the plot by state, the overall negative relationship appears consistent across states, but the strength and spread of the relationship vary. Some states show a tighter clustering of points along the downward trend, while others have greater variability. This suggests that while higher education is generally associated with lower poverty across the Midwest, the magnitude of this relationship differs somewhat by state.
+Answer: the scatterplot shows a negative relationship between the percentage of people with a college degree and those living below the poverty line. Higher percentages of college education tend to have lower poverty rates, and vice versa, with several outliers. One clear outlier is Jackson, Illinois, which has a relatively high percentage below poverty (about 28%) despite having a higher percentage of college-educated people (about 37%).
+  The states seem to vary somewhat in their strength and spread, such as Indiana seems to have tighter clustering compared to Minnesota. While this overall relationship appears to be consistent across states, it's difficult to discern due to how cluttered the graph is. I would not be confident commenting on specific trends by state, but this graph does help show the overall relationship across midwest counties.
 
 #Q4: Scatter plot colored by state
 
