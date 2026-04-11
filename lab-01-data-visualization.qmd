@@ -35,7 +35,7 @@ library(tidyverse)
 ```
 
 
-## Q1: Histogram of population density
+## Q1: Histogram of pop density
 
 ```{r}
 ggplot(midwest, aes(x = popdensity)) + 
@@ -75,7 +75,8 @@ ggplot(midwest, aes(x = popdensity)) +
 
 Answer: I think the binwidth of 1000 is most informative, as it gives you the clearest visualization. Too many bins make the histogram overcluttered (i.e. bin widths of 10 000 or 100 000) because they emphasize random variation, while too few bins (i.e. 100) hides variation. The bin width of 1000 most clearly shows how the variation and shape distribution of population density.
 
-## Q2: Boxplot
+
+## Q2: Boxplot of pop density
 
 ```{r}
 ggplot(midwest, aes(y = popdensity)) + 
@@ -88,7 +89,7 @@ ggplot(midwest, aes(y = popdensity)) +
 Answer: The boxplot looks compressed at the bottom, with many outliers. This makes sense since most counties are similar with a low pop density, with a few high density populated outliers like Cook County, Illinois, causing the boxplot to look like a flat line. Since it's extremely right-skewed, as seen in the histogram from Q1, the boxplot is pushed to the bottom.
 
 
-## Q3: Scatter plot of total pop vs pop density
+## Q3: Scatterplot below poverty vs. college-educated
 
 ```{r}
 ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape = state)) + 
@@ -119,13 +120,21 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = state, shape =
 Answer: I think it depends on the question being asked. I like Q3s plot better for understanding the overall trend of the midwest, but this scatterplot is so much easier to look at the relationship between poverty and college education on an individual state basis, as it's less cluttered. This one also may highlight differences in strength and shape of the relationship that was more difficult when they were overlapped.
 
 
-## Q5: Faceted scatter plot by state
+## Q5: Boxplots comparing counties' geographic area
 
-ggplot(midwest, aes(x = state, y = area)) + geom_boxplot(fill = "lightgreen") + labs( title = "Distribution of County Area by State", x = "State", y = "County Area" )
+```{r}
+ggplot(midwest, aes(x = state, y = area)) + 
+  geom_boxplot() + 
+  labs(
+    x = "State", 
+    y = "Area",
+    title = "Distribution of County Area by State")
+```
 
-Answer: Yes, some states tend to have geographically larger counties than others. The boxplots show clear differences in typical county area sizes across states. For example, counties in Minnesota tend to have larger median areas compared to counties in states such as Ohio and Indiana. The variability of county sizes also differs by state. Some states show a wide spread in county area, indicating substantial variation in county size, while others have more tightly clustered distributions, suggesting more uniform county areas. Minnesota has the largest county in the dataset, which is St. Louis County. This makes sense geographically, as northern Minnesota contains large, sparsely populated counties compared to more densely populated states.
+Answer: Yes, some states have geographically larger counties on average than others. For example, counties in Minnesota tend to have larger median areas compared to counties in states such as Ohio and Indiana, and also has an outlier with the largest county area, St. Louis County. Illinois, Minnesota, and Wisconsin also have greater variation in county size, as seen by their wider spread. Whereas Indiana and Ohio have much shorter distributions, suggesting their county areas are more consistent in size.
 
-#Q6: Do some states have a higher percentage of their counties located in a metropolitan area?
+
+## Q6: Do some states have a higher percentage of their counties located in a metropolitan area?
 
 midwest \<- midwest \|\> mutate(metro = if_else(inmetro == 1, "Yes", "No"))
 
